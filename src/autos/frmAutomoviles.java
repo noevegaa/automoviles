@@ -15,8 +15,7 @@ import javax.swing.JOptionPane;
 public class frmAutomoviles extends javax.swing.JFrame {
 
      
-     
-    ResultSet rs = null;
+   ResultSet rs = null;
     automoviles cl = new automoviles();
    int a=1;
    
@@ -24,6 +23,8 @@ public class frmAutomoviles extends javax.swing.JFrame {
    
     public frmAutomoviles() {
         initComponents();
+        this.setLocationRelativeTo(frmAutomoviles.this);
+        this.setTitle("Registro de Automoviles");
         txtId.setText(""+a);
         this.getContentPane().setBackground(Color.lightGray);
     }
@@ -34,6 +35,13 @@ void limpiar(){
        txtPrecio.setText("");
        txtModelo.setText("");
        txtMarca.setText("");
+
+       txtId.setText(""+a);
+       txtPrecio.setText("");
+       txtModelo.setText("");
+       txtMarca.setText("");
+       
+
    }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -263,10 +271,11 @@ void limpiar(){
                     .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar))
                 .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(cmbCombus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(cmbCombus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
@@ -333,6 +342,7 @@ void limpiar(){
               if(conf==true){
         cl.insertar(this.txtId.getText(), this.txtMarca.getText(), this.txtModelo.getText(), this.txtColor.getText(),tipo, this.txtPrecio.getText(),combustible);
         JOptionPane.showMessageDialog(null, "registro exitoso");
+        a=a+1;
         limpiar();
               }
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -348,7 +358,11 @@ void limpiar(){
                 JOptionPane.showMessageDialog(rootPane, "Registro eliminado exitosamente", "SISTEMA", 1);
             }
             txtCod.setText("");
+           if(a!=1){
              a=a-1;
+           }
+          
+
             limpiar();
            
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -391,9 +405,9 @@ void limpiar(){
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnHechoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHechoActionPerformed
-        String tipo="",combustible="";
-        
-        if(cmbCombus.getSelectedIndex()==0){
+       String combustible="",tipo="";
+        boolean conf=false;
+                if(cmbCombus.getSelectedIndex()==0){
             combustible="gasolina";
         }
                    if(cmbCombus.getSelectedIndex()==1){
@@ -422,11 +436,30 @@ void limpiar(){
                   tipo="5";
                   
               }
-        cl.modificar(this.txtId.getText(), this.txtMarca.getText(), this.txtModelo.getText(), this.txtColor.getText(),tipo, this.txtPrecio.getText(),combustible);
-                          
-                      
+              if (this.txtMarca.getText().equals("")) {
+                 
+                JOptionPane.showMessageDialog(rootPane, "Debe tener una marca", "AVISO DEL SISTEMA", 2);
+        }else if (this.txtModelo.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Debe existir un modelo", "AVISO DEL SISTEMA", 2);
+                this.txtModelo.requestFocus();
+            }else if (this.txtColor.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Debe existir un color", "AVISO DEL SISTEMA", 2);
+                this.txtColor.requestFocus();
+            }else if (this.txtPrecio.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Debe tener un valor de compra", "AVISO DEL SISTEMA", 2);
+                this.txtPrecio.requestFocus();
+            }else{
+                conf=true;
+            }
+              if(conf==true){
+        cl.insertar(this.txtId.getText(), this.txtMarca.getText(), this.txtModelo.getText(), this.txtColor.getText(),tipo, this.txtPrecio.getText(),combustible);
+        JOptionPane.showMessageDialog(null, "registro exitoso");
 
-                   JOptionPane.showMessageDialog(null,"Modificado Exitosamente");
+
+        a=a+1;
+
+        limpiar();
+              }
     }//GEN-LAST:event_btnHechoActionPerformed
 
     /**

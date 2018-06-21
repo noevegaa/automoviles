@@ -5,15 +5,120 @@
  */
 package autos;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author josen
  */
 public class frmRegistros extends javax.swing.JFrame {
 
-    
+    Object datos2[]=new Object[3];
+    registros cl = new registros();
+    ResultSet rs = null;
+    ResultSet rs2 = null;
+    DefaultTableModel mdlregistro=new DefaultTableModel();
+        
     public frmRegistros() {
+       
+       
         initComponents();
+        this.setLocationRelativeTo(frmRegistros.this);
+        this.setTitle("Registro de Automoviles");
+//        LlenarTabla();
+
+
+    mdlregistro.addColumn("id");
+    mdlregistro.addColumn("Marca");
+    mdlregistro.addColumn("Modelo");
+    mdlregistro.addColumn("Tipo");
+    mdlregistro.addColumn("color");
+    mdlregistro.addColumn("precio");
+    mdlregistro.addColumn("gasofa");
+
+        rs = null;
+        rs2 = null;
+        
+        rs = cl.buscarTodo();
+        
+        //mdlregistro.setRowCount(0);
+        
+        
+        try {
+             while (rs.next()) {
+                
+                 
+                 
+                String id=rs.getString(1);
+                
+               String marca= rs.getString(2);
+                
+               String modelo= rs.getString(3);
+                String tipo = rs.getString(4);
+                String color = rs.getString(5);
+                String precio = rs.getString(6);
+                String gasolina = rs.getString(7);
+                rs2 = cl.buscartipo(tipo);
+                 try {
+                     while (rs2.next()) {
+                         
+                    String aux=(rs2.getString(2));
+                        tipo=aux;
+                        
+                     }
+                 } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "AVISO DEL SISTEMA", JOptionPane.ERROR_MESSAGE);
+        }
+              
+                
+                
+                   tablaRegistro.setModel(mdlregistro);
+                 Object datos[] = {id,marca,modelo,tipo,color,precio,gasolina};
+                 
+                 mdlregistro.addRow(datos);
+                   tablaRegistro.setModel(mdlregistro);
+                
+             }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "AVISO DEL SISTEMA", JOptionPane.ERROR_MESSAGE);
+        }
+      
+
+//hola
+    }
+    public void LlenarTabla() {
+//        rs = null;
+//        rs2 = null;
+//        rs = cl.buscarTodo();
+//        mdlregistro.setRowCount(0);
+//        
+//        try {
+//             while (rs.next()) {
+//                String id = rs.getString(1);
+//                String marca = rs.getString(2);
+//                String modelo = rs.getString(3);
+//                String tipo = rs.getString(4);
+//                String color = rs.getString(5);
+//                String precio = rs.getString(6);
+//                String gasolina = rs.getString(7);
+//                rs2 = cl.buscartipo(tipo);
+//                 try {
+//                     while (rs2.next()) {
+//                    String aux=(rs2.getString(2));
+//                        tipo=aux;
+//                     }
+//                 } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "AVISO DEL SISTEMA", JOptionPane.ERROR_MESSAGE);
+//        }
+//                Object datos[] = {id, marca,modelo,tipo,color,precio,gasolina};
+//                mdlregistro.addRow(datos);
+//             }
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "AVISO DEL SISTEMA", JOptionPane.ERROR_MESSAGE);
+//        }
     }
 
     /**
@@ -27,7 +132,7 @@ public class frmRegistros extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaRegistro = new javax.swing.JTable();
         btnRegresar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
@@ -35,19 +140,9 @@ public class frmRegistros extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "No. Registro", "Marca", "Tipo", "Modelo", "Color", "Precio", "Combustible"
@@ -61,7 +156,7 @@ public class frmRegistros extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaRegistro);
 
         btnRegresar.setText("REGRESAR");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -83,7 +178,7 @@ public class frmRegistros extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(159, 159, 159)
@@ -96,12 +191,12 @@ public class frmRegistros extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
                     .addComponent(btnSalir))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,7 +209,11 @@ public class frmRegistros extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        System.exit(0);
+        String botones[]={"Cerrar","Cancelar"};
+                int eleccion=JOptionPane.showOptionDialog(this,"¿desea cerrar la aplicacion?", "Advertencia", 0, 0, null, botones, this);
+                if(eleccion==JOptionPane.YES_OPTION){
+                    System.exit(0); 
+                }
     }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
@@ -143,6 +242,7 @@ public class frmRegistros extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frmRegistros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -156,7 +256,7 @@ public class frmRegistros extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tablaRegistro;
     // End of variables declaration//GEN-END:variables
 }
