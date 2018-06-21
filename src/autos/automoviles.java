@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 public class automoviles {
      Conexion cn = new Conexion();
      
+     
      public void insertar(String carro, String marca, String modelo,String color,String tipo,String precio,String gasolina){
          cn.UID("INSERT INTO carros(carro,marca,modelo,color,tipo,precio,gasolina) VALUES('" +carro+ "','"+marca+ "','"+modelo+"','"+color+ "','"+tipo+ "','"+precio+ "','"+gasolina+ "')");
      }

@@ -360,6 +360,7 @@ void limpiar(){
             txtCod.setText("");
            if(a!=1){
              a=a-1;
+             
            }
           
 

@@ -9,6 +9,7 @@ package autos;
 import java.sql.ResultSet;
 
 
+
 public class registros {
      Conexion cn = new Conexion();
      

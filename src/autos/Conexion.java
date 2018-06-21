@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
+
 public class Conexion {
     
     private String url = "jdbc:mysql://localhost:3306/automoviles";

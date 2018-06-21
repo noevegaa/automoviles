@@ -25,6 +25,7 @@ public class frmRegistros extends javax.swing.JFrame {
     public frmRegistros() {
        
        
+        
         initComponents();
         this.setLocationRelativeTo(frmRegistros.this);
         this.setTitle("Registro de Automoviles");
