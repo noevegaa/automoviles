@@ -15,15 +15,15 @@ public class automoviles {
      public void insertar(String carro, String marca, String modelo,String color,String tipo,String precio,String gasolina){
          cn.UID("INSERT INTO carros(carro,marca,modelo,color,tipo,precio,gasolina) VALUES('" +carro+ "','"+marca+ "','"+modelo+"','"+color+ "','"+tipo+ "','"+precio+ "','"+gasolina+ "')");
      }
-     public void modificar(String id, String nombre, String ocupacion) {
-        cn.UID("UPDATE registro SET nombre='" + nombre + "',ocupacion='" + ocupacion + "' WHERE Id='" + id + "'");
+     public void modificar(String id, String marca, String modelo,String color,String tipo,String precio,String gasolina) {
+        cn.UID("UPDATE carros SET carro='" + marca + "',modelo='" +modelo + "',color='" +color+ "',tipo='" +tipo+ "',precio='" +precio+ "',gasolina='" +gasolina+"' WHERE carro='" + id + "'");
     }
      
       public void eliminar(String id) {
         cn.UID("DELETE FROM carros WHERE carro='" + id + "'");
     }
       public ResultSet buscar(String id) {
-        return (cn.getValores("SELECT * FROM registro WHERE Id='" + id + "'"));
+        return (cn.getValores("SELECT * FROM carros WHERE carro='" + id + "'"));
     } 
      
      
